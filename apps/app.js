@@ -1,5 +1,5 @@
 $(document).ready(function () { 
-	// This function is to get the data from youtube API and display it on the page
+	// This function gets the data from the YouTube API and displays it on the page
 	function getResults(searchTerm) {
 		$.getJSON("https://www.googleapis.com/youtube/v3/search",
 			{
@@ -9,29 +9,30 @@ $(document).ready(function () {
 			},
 			function (data) {
 				if (data.pageInfo.totalResults == 0) {
-					alert("No videos found!");
+					alert("No results!");
 				}
-				// If there are no results it will just empty the list
-				displaySearchResults(data.items);
+				// If no results, empty the list
+				displayResults(data.items);
 			}
-
 		);
 	}
 
-	function displaySearchResults(videos) {
+	//Display results in ul
+	function displayResults(videos) {
 		var html = "";
 		$.each(videos, function (index, video) {
-			// append li to ul
-			console.log(video.snippet.thumbnails.medium.url);
-			html = html + "<li><p>" + video.snippet.title +
-				"</p><img src='" +  video.snippet.thumbnails.high.url + "'/></li>" ;
-
+			// Append results li to ul
+			console.log(video.snippet.title);
+			console.log(video.snippet.thumbnails.high.url);
+			html = html + "<li><p class='line-clamp'>" + video.snippet.title +
+				"</p><a target='_blank' href='https://www.youtube.com/watch?v=" + video.id.videoId + "'><img src='" +  video.snippet.thumbnails.high.url + "'/></a></li>" ;
 		});
 		$("#search-results ul").html(html);
 	}
 
+	//Use search term
 	$("#search-form").submit(function (event) {
 		event.preventDefault();
-		getResults($("#query").val());
+		getResults($("#search-term").val());
 	});
 });
