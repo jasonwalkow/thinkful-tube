@@ -5,7 +5,8 @@ $(document).ready(function () {
 			{
 				"part": "snippet",
 				"key": "AIzaSyBhaXA9PC5S9CxudXUORc7dFf7JBR5nYcw",
-				"q": searchTerm 
+				"q": searchTerm,
+				"maxResults": 50
 			},
 			function (data) {
 				if (data.pageInfo.totalResults == 0) {
